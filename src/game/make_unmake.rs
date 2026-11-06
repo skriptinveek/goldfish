@@ -308,10 +308,17 @@ impl GameState {
                 }
                 _ => (),
             }
+
+            self.pst_score -= pst(&moving_piece, us, m.to.idx());
             self.pst_score += pst(&promo, us, m.to.idx());
             self.zobrist ^= piece_sq_hash(promo, us, m.to);
             self.add_material(promo, us, 1);
             self.remove_material(moving_piece, us, 1);
+
+            match us {
+                Color::White => self.wp &= !(1 << m.to.idx()),
+                Color::Black => self.bp &= !(1 << m.to.idx()),
+            }
         } else {
             self.zobrist ^= piece_sq_hash(moving_piece, us, m.to);
         }
@@ -454,6 +461,13 @@ impl GameState {
                 self.bb |= 1 << m.from.idx();
             }
             _ => (),
+        }
+
+        if m.promotion == Some(PieceType::Bishop) {
+            match us {
+                Color::White => self.wb &= !(1 << m.to.idx()),
+                Color::Black => self.bb &= !(1 << m.to.idx()),
+            }
         }
 
         if sq.1 == PieceType::King {

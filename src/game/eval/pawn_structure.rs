@@ -72,13 +72,13 @@ pub fn pawn_structure(wp: u64, bp: u64) -> PawnStructure {
             }
 
             if is_passed {
-                passed -= PASSED_PAWN_SCORE[6 - rank];
+                passed -= PASSED_PAWN_SCORE[rank - 1];
             } else if wleft << (rank * 8) == 0
                 && wcurrent << (rank * 8) == 0
                 && wright << (rank * 8) == 0
             {
                 is_passed = true;
-                passed -= PASSED_PAWN_SCORE[6 - rank];
+                passed -= PASSED_PAWN_SCORE[rank - 1];
             }
         }
     }

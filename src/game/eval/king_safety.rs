@@ -20,7 +20,7 @@ fn pawn_shield(gs: &GameState, color: Color) -> i32 {
     for df in [-1, 0, 1] {
         if let Some(coord) = king.checked_offset(df, dr) {
             match board.get(coord) {
-                Square::Occupied { piece, color } if color == Color::White => {
+                Square::Occupied { piece, color: piece_color } if piece_color == color => {
                     if piece == PieceType::Pawn {
                         score += 20;
                     } else {

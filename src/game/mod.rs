@@ -569,7 +569,7 @@ impl GameState {
                 cell = next;
                 match self.board.get(next) {
                     Square::Empty => continue,
-                    Square::Occupied { color, piece } if color == self.turn => {
+                    Square::Occupied { color, .. } if color == self.turn => {
                         if candidate_square.is_none() {
                             candidate_square = Some(cell);
                         } else {
